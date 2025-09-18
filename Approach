@@ -1,0 +1,17 @@
+The pipeline analyzes sales call quality within free Google Colab. Audio is obtained either from YouTube (yt-dlp with pytube fallback) or by uploading a file, then standardized to 16 kHz mono WAV. Preprocessing normalizes and cleans audio for better transcription and diarization.
+
+Speaker diarization is handled with pyannote.audio to separate two speakers. Transcription is performed using OpenAI Whisper (tiny model) with timestamps. These are merged so each segment is mapped to a speaker.
+
+The analyzer computes:
+
+Talk-time ratio (who spoke more)
+
+Number of questions asked (engagement)
+
+Longest monologue duration (listening balance)
+
+Sentiment (positive/neutral/negative tone)
+
+Actionable insight (simple recommendation)
+
+A heuristic labels the sales rep vs. customer (based on dominance and questions asked). This approach balances accuracy with runtime efficiency, completing in <30s on free Colab.
